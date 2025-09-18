@@ -1,24 +1,21 @@
 name: Deploy Celestial from tarball to GitHub Pages
 
-on:
-  push:
-    branches:
-      - main
-
-permissions:
-  contents: write
-
-jobs:
-  build-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      # checkout the repository, which contains the tarball and this workflow
-      - uses: actions/checkout@v3
-      # Extract the tarball into the workspace
+  on:
+    push:
+      branches:
+        - main
+  
+  permissions:
+    contents: write
+  
+  jobs:
+    build-deploy:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
       - name: Extract Celestial project
         run: |
           tar -xzf celestial_site.tar.gz
-      # Install dependencies and build the site from the extracted folder
       - name: Install dependencies
         run: |
           cd Celestial
@@ -28,7 +25,6 @@ jobs:
         run: |
           cd Celestial
           npm run build
-      # Deploy the built site to GitHub Pages using the gh-pages action
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
