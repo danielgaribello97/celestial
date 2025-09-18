@@ -1,0 +1,44 @@
+name: Build and Deploy 2
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Extract project
+        run: tar -xzf celestial_site.tar.gz
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Prepare index.html
+        run: |
+          cd Celestial
+          cp public/index.html index.html
+
+      - name: Install dependencies
+        run: |
+          cd Celestial
+          npm install
+          npm install @vitejs/plugin-react
+
+      - name: Build site
+        run: |
+          cd Celestial
+          npm run build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: Celestial/dist
