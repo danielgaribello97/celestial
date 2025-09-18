@@ -12,7 +12,7 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-      # Checkout the repository, which contains the tarball and this workflow
+      # checkout the repository, which contains the tarball and this workflow
       - uses: actions/checkout@v3
       # Extract the tarball into the workspace
       - name: Extract Celestial project
@@ -21,16 +21,17 @@ jobs:
       # Install dependencies and build the site from the extracted folder
       - name: Install dependencies
         run: |
-cd Celestial
+          cd Celestial
           npm install
           npm install @vitejs/plugin-react
       - name: Build site
         run: |
-          cd Celestial && npm run build
+          cd Celestial
+          npm run build
       # Deploy the built site to GitHub Pages using the gh-pages action
-      - uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./Celestial/dist
-          # optional: publish branch (defaults to gh-pages)
+          publish_dir: "Celestial/dist"
           publish_branch: gh-pages
