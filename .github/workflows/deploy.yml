@@ -21,7 +21,9 @@ jobs:
       # Install dependencies and build the site from the extracted folder
       - name: Install dependencies
         run: |
-          cd Celestial && npm install
+cd Celestial
+          npm install
+          npm install @vitejs/plugin-react
       - name: Build site
         run: |
           cd Celestial && npm run build
