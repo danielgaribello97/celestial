@@ -21,7 +21,7 @@ jobs:
       # Install dependencies and build the site from the extracted folder
       - name: Install dependencies
         run: |
-          cd Celestial && npm ci
+          cd Celestial && npm install
       - name: Build site
         run: |
           cd Celestial && npm run build
@@ -29,4 +29,6 @@ jobs:
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: Celestial/dist
+          publish_dir: ./Celestial/dist
+          # optional: publish branch (defaults to gh-pages)
+          publish_branch: gh-pages
