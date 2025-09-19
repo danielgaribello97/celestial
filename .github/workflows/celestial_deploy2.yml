@@ -35,7 +35,7 @@ jobs:
       - name: Build site
         run: |
           cd Celestial
-          npm run build
+          npm run build -- --base=/celestial/
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
